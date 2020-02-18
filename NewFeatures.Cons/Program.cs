@@ -1,6 +1,4 @@
 ﻿using NewFeatures.Domain;
-using System;
-using System.Collections.Generic;
 
 namespace NewFeatures.Cons
 {
