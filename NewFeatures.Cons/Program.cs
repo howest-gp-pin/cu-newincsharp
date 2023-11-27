@@ -1,6 +1,8 @@
 ﻿using NewFeatures.Domain;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace NewFeatures.Cons
 {
@@ -8,16 +10,26 @@ namespace NewFeatures.Cons
     {
         static void Main(string[] args)
         {
-            List<IFlyable> flyables = new List<IFlyable>
-            {
-                new Plane(),
-                new Rock(),
-            };
+            string inputName = "Alice";
 
-            foreach(IFlyable flyable in flyables )
+            //not possible, neither is escaping the " characters, ...
+            //string json = $"{"name": "{inputname}"}";
+
+            string json = $$"""
+                {"name": "{{inputName}}" }
+                """;
+
+            Console.WriteLine("Raw Json: " + json);
+
+            Student student = JsonSerializer.Deserialize<Student>(json, new JsonSerializerOptions
             {
-                Console.WriteLine($"{flyable.GetType()}\n{flyable.TakeOff()}\n{flyable.Fly()}\n{flyable.Land()}\n\n\n");
-            }
+                PropertyNameCaseInsensitive = true
+            });
+
+            Console.WriteLine("Deserialized: " + student.Name);
+
+
+
         }
     }
 }
